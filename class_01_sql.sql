@@ -2,7 +2,7 @@
 
 
 -- DROP DATABASE IF EXISTS university;
--- CREATE DATABASE university;
+-- CREATE DATABASE shop;
 
 -- USE university
 */
@@ -17,6 +17,7 @@ professores com os seguintes campos:
 
 Tabela Teacher
 */
+
 CREATE TABLE university.Table_Teacher (
   ID_Teacher INT NOT NULL AUTO_INCREMENT,
   Name_Teacher VARCHAR(100) NOT NULL,
@@ -36,8 +37,6 @@ CREATE TABLE university.Table_Teacher_Two (
 ALTER TABLE university.Table_Teacher
 ADD CHECK (Age_Teacher > 18);
 
-select * from university.Table_Teacher;
-delete from university.Table_Teacher where id_teacher  = 8;
 
 CREATE TABLE university.Table_Student (
   ID_Student INT NOT NULL AUTO_INCREMENT,
@@ -61,8 +60,9 @@ insert into university.Table_Teacher (Name_Teacher, Subject_Teacher, Age_Teacher
 select * 
 from university.Table_Teacher;
 
-select COUNT(*) 
-from university.Table_Teacher where Age_Teacher > 35;
+select COUNT(*), name_teacher
+from university.Table_Teacher where Age_Teacher > 35
+group by name_teacher;
 
 select * 
 from university.Table_Teacher where Age_Teacher between 30 and 40;
@@ -92,9 +92,43 @@ SELECT name_teacher FROM cte1 JOIN cte2
 WHERE cte1.id_teacher = cte2.id_teacher;
 
 
+SELECT
+	Name_Teacher,
+    RANK() OVER (ORDER BY Age_Teacher)
+FROM university.Table_Teacher;
 
 
-CREATE TABLE university.Table_Product (
+SELECT
+	Name_Teacher,
+    Age_Teacher,
+    Age_Teacher - LAG(Age_Teacher) OVER (ORDER BY Age_Teacher) AS minha_coluna
+
+FROM university.Table_Teacher;
+
+select * from university.table_teacher;
+
+
+
+SELECT
+	Name_Teacher,
+    MAX(Age_Teacher)
+FROM university.table_teacher
+
+GROUP BY Name_Teacher
+HAVING (SELECT
+    MAX(Age_Teacher)
+FROM university.table_teacher);
+
+/*
+Exercício 2 - Produtos
+Uma loja deseja cadastrar produtos. Crie uma tabela chamada produtos com os seguintes
+campos:
+• id → inteiro, auto incremento, chave primária
+• nome → texto com até 100 caracteres
+• categoria → texto com até 50 caracteres
+• preco → número decimal
+*/
+CREATE TABLE shop.Table_Product (
     ID_Product INT NOT NULL AUTO_INCREMENT,
     Name_Product VARCHAR(100),
     Category_Product VARCHAR(50),
@@ -102,8 +136,157 @@ CREATE TABLE university.Table_Product (
     PRIMARY KEY(ID_Product)
 );
 
-insert into university.Products (name, category, price) values ('', '', 1000);
-insert into university.Products (name, category, price) values ('', '', 2039);
-insert into university.Products (name, category, price) values ('', '', 5000);
+insert into shop.Table_Product (name_product, category_product, price_product) values ('Samsung S25', 'Smartphone', 1000);
+insert into shop.Table_Product (name_product, category_product, price_product) values ('iPhone 17', 'Apple', 2039);
+insert into shop.Table_Product (name_product, category_product, price_product) values ('iPhone 18', 'Apple', 5000);
 
+SELECT *
+FROM shop.table_product
+WHERE
+	price_product > 3000;
+    
+    
+SELECT *
+FROM shop.table_product
+WHERE
+	category_product = 'Smartphone'
+    
+
+
+
+
+
+
+CREATE TABLE university.Table_Movie (
+	Id_Movie INT NOT NULL AUTO_INCREMENT,
+    Title_Movie VARCHAR(100),
+    Genre_Movie VARCHAR(50),
+    Duration_Movie INT,
+    Nationality_Movie VARCHAR(50),
+    Star_Character VARCHAR(50),
+    PRIMARY KEY (Id_Movie)
+);
+
+INSERT INTO university.Table_Movie (
+	Title_Movie, 
+    Genre_Movie, 
+    Duration_Movie, 
+    Nationality_Movie, 
+    Star_Character
+)
+VALUES(
+	'Fast And Furious',
+    'Action',
+    90,
+    'USA',
+    'Jordana Brewster'
+);
+
+INSERT INTO university.Table_Movie (
+	Title_Movie, 
+    Genre_Movie, 
+    Duration_Movie, 
+    Nationality_Movie, 
+    Star_Character
+)
+VALUES(
+	'Heat',
+    'Police',
+    120,
+    'USA',
+    'Ashley Judd'
+);
+
+INSERT INTO university.Table_Movie (
+	Title_Movie, 
+    Genre_Movie, 
+    Duration_Movie, 
+    Nationality_Movie, 
+    Star_Character
+)
+VALUES(
+	'Waist Deep',
+    'Action',
+    110,
+    'USA',
+    'Megan Good'
+);
+
+INSERT INTO university.Table_Movie (
+	Title_Movie, 
+    Genre_Movie, 
+    Duration_Movie, 
+    Nationality_Movie, 
+    Star_Character
+)
+VALUES(
+	'CREED',
+    'Action',
+    '95',
+    'USA',
+    'Tessa Thompson'
+);
+
+INSERT INTO university.Table_Movie (
+	Title_Movie, 
+    Genre_Movie, 
+    Duration_Movie, 
+    Nationality_Movie, 
+    Star_Character_Movie
+)
+VALUES(
+	'The Equalizer',
+    'Police',
+    '114',
+    'USA',
+    'Chloe Grace Moretz'
+);
+INSERT INTO university.Table_Movie (
+	Title_Movie, 
+    Genre_Movie, 
+    Duration_Movie, 
+    Nationality_Movie, 
+    Star_Character
+)
+VALUES(
+	'Takers',
+    'Police',
+    '80',
+    'USA',
+    'Zoe Saldanha'
+);
+
+
+
+select * from university.Table_Movie;
+SELECT Title_Movie FROM university.Table_Movie;
+
+SELECT * 
+FROM university.Table_Movie 
+WHERE duration_movie > 110;
+
+SELECT * 
+FROM university.Table_Movie 
+WHERE duration_movie BETWEEN 50 AND 80;
+
+SELECT *
+FROM university.Table_Movie
+WHERE nationality_movie = 'Brasil';
+
+SELECT 
+	Id_Movie,
+	Title_Movie,
+    Genre_Movie,
+    Duration_Movie,
+    Nationality_Movie,
+    Star_Character
+FROM university.Table_Movie
+ORDER BY duration_movie;
+
+
+SELECT 
+	CONCAT(SUM(duration_movie) / 60, ' Hours')  AS 'Sesh Time'
+FROM university.Table_Movie
+WHERE
+	title_movie IN ('Takers', 'Heat')
 
