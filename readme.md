@@ -1,0 +1,12 @@
+# Data Archtecture - Dra. Bethina
+
+SQL Files from SQL Class of Bethina
+
+CREATE DATABASE
+CREATE TABLE
+INSERT
+UPDATE
+DELETE
+JOIN
+GROUP BY
+FUNCTIONS
