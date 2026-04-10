@@ -4,7 +4,6 @@ CREATE DATABASE biblioteca;
 USE biblioteca;
 ############################################################
 
-
 #----------------------------------------------
 # Parte 1 — Criação das tabelas
 # Crie as tabelas abaixo:
@@ -148,7 +147,7 @@ SELECT
     category.name_category,
     book.name_book
 FROM table_book book
-LEFT JOIN table_category category
+RIGHT JOIN table_category category
 	ON book.id_category = category.id_category;
     
 #----------------------------------------------
@@ -171,9 +170,9 @@ SELECT
 	reader.name_reader,
     book.name_book
 FROM table_reader reader
-LEFT JOIN table_loan loan
+INNER JOIN table_loan loan
 	ON reader.id_reader = loan.id_reader
-LEFT JOIN table_book book
+INNER JOIN table_book book
 	ON loan.id_book = book.id_book
 ORDER BY
 	reader.name_reader;
@@ -270,7 +269,7 @@ ORDER BY reader.name_reader;
 # Terminei a atividade em casa fazendo online no https://onecompiler.com/, então não consegui usar o Workbench para exportar o diagrama.
 # Fiz uma versão de Diagrama no https://drawdb.app/, posso gerar uma do Workbench na próxima oportunidade no Senai
 # imagem no email ou no endereço abaixo
-# https://github.com/deveveryday/data_architecture_bethina/blob/main/diagrama.png
+# https://github.com/deveveryday/data_architecture_bethina/blob/4f29644ef2274b34e413dffd83079a8c6476bf96/diagrama.png
 #----------------------------------------------  
 
 #----------------------------------------------
@@ -278,10 +277,6 @@ ORDER BY reader.name_reader;
 # Explique por que a tabela emprestimos representa um relacionamento muitos-para-muitos (N:N) entre leitores e livros.
 # Resposta: Porque de forma geral ela pode ter muitos ids repetidos de leitores/id_reader e de livros/id_book. Em outro relacionamento 1-N poderia ter somente um id_book
 #---------------------------------------------- 
-
-
-
-      
 
 
 
