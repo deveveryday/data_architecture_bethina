@@ -189,8 +189,8 @@ INNER JOIN table_loan loan
 	ON reader.id_reader = loan.id_reader
 INNER JOIN table_book book
 	ON loan.id_book = book.id_book
-ORDER BY
-	book.name_reader;
+INNER JOIN table_category category
+	ON category.id_category = book.id_category;
       
 
 
