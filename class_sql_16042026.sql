@@ -612,7 +612,7 @@ WHERE id_course IS NOT NULL;
 ######################################################################
 
 ###################
-# 23. 
+# 23. Complete query JOIN CASE ORDER
 ###################
 
 SELECT
@@ -626,3 +626,15 @@ FROM table_student student
 LEFT JOIN table_course course
 	ON student.id_course = course.id_course
 ORDER BY student.name_student ASC;
+
+###################
+
+SELECT *
+FROM table_student student
+WHERE 
+	id_course = 1 AND
+	name_student LIKE '%a%';
+        
+        
+        
+
